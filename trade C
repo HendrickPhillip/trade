@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include "EClientSocket.h"
+#include "EWrapper.h"
+
+class TradingProgram : public EWrapper {
+private:
+    EClientSocket *clientSocket;
+
+public:
+    TradingProgram() {
+        clientSocket = new EClientSocket(this);
+    }
+
+    void connect(char *host, int port, int clientId) {
+        clientSocket->eConnect(host, port, clientId);
+    }
+
+    void disconnect() {
+        clientSocket->eDisconnect();
+    }
+
+    void placeOrder(int orderId, Contract contract, Order order) {
+        clientSocket->placeOrder(orderId, contract, order);
+    }
+
+    // implementación de los métodos de EWrapper para recibir datos del mercado y manejar eventos comerciales
+};
+
+int main() {
+    TradingProgram program;
+    program.connect("localhost", 7496, 0);
+
+    // obtener datos del mercado y procesarlos para identificar oportunidades comerciales
+
+    Contract contract;
+    // configurar el contrato con los detalles del producto que se desea negociar
+
+    Order order;
+    // configurar la orden con los detalles de la operación que se desea realizar
+
+    program.placeOrder(orderId, contract, order);
+
+    program.disconnect();
+    return 0;
+}
