@@ -1,0 +1,39 @@
+import com.ib.client.*;
+
+public class TradingProgram implements EWrapper {
+
+    private EClientSocket clientSocket;
+    
+    public TradingProgram() {
+        clientSocket = new EClientSocket(this);
+    }
+    
+    public void connect(String host, int port, int clientId) {
+        clientSocket.eConnect(host, port, clientId);
+    }
+    
+    public void disconnect() {
+        clientSocket.eDisconnect();
+    }
+    
+    public void placeOrder(int orderId, Contract contract, Order order) {
+        clientSocket.placeOrder(orderId, contract, order);
+    }
+    
+    // implementación de los métodos de EWrapper para recibir datos del mercado y manejar eventos comerciales
+    
+    public static void main(String[] args) {
+        TradingProgram program = new TradingProgram();
+        program.connect("localhost", 7496, 0);
+        
+        // obtener datos del mercado y procesarlos para identificar oportunidades comerciales
+        
+        Contract contract = new Contract();
+        // configurar el contrato con los detalles del producto que se desea negociar
+        
+        Order order = new Order();
+        // configurar la orden con los detalles de la operación que se desea realizar
+        
+        program.placeOrder(orderId, contract, order);
+    }
+}
